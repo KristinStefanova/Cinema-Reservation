@@ -3,5 +3,5 @@ def has_capital(password):
 
 
 def has_special_symbol(password):
-    special_symbols = "!#$%&()*+,-./:;<=>?@[\]^_`{|}~"
+    special_symbols = "!#$%&()*+,-./:;<=>?@[]^_`{|}~"
     return any(char in special_symbols for char in password)

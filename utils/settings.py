@@ -5,6 +5,7 @@ from sqlalchemy.orm import relationship, sessionmaker
 from sqlalchemy.sql import func
 from hashlib import pbkdf2_hmac
 from datetime import datetime
+from tabulate import tabulate
 
 
 DB_NAME = "cinama.db"
@@ -13,3 +14,5 @@ HALL_MAX_SIZE = 10
 
 LOW_MOVIE_RATING = 1
 HIGH_MOVIE_RATING = 10
+
+SALT = 10000

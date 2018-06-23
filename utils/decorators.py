@@ -2,8 +2,7 @@ from .help_functions import has_capital, has_special_symbol
 from .exceptions import (LessThanEightSymbolsError,
                          MissingCapitalLetterError,
                          MissingSpecialSymbolError)
-from .settings import pbkdf2_hmac
-from .settings import datetime
+from .settings import pbkdf2_hmac, datetime, SALT
 
 
 def validate_password(func):
@@ -21,11 +20,12 @@ def validate_password(func):
 def hashpassword(func):
     def decorated(username, password):
         hashpass = pbkdf2_hmac('sha256', password.encode(),
-                               username.encode(), 10000).hex()
+                               username.encode(), SALT).hex()
         return func(username, hashpass)
     return decorated
 
 
+# TO DO make it easy
 def log_info(func):
     def decorated(user_id, reservations):
         reservations = ", ".join([f'{res}' for res in reservations])

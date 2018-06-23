@@ -4,49 +4,50 @@ from utils.decorators import validate_password, hashpassword
 
 
 class UserController:
-    @staticmethod
+    @classmethod
     @validate_password
     @hashpassword
-    def create(username, password):
-        session.add(User(username=username, password=password))
+    def create(cls, username, password):
+        user = User(username=username, password=password)
+        session.add(user)
         session.commit()
 
-    @staticmethod
-    @hashpassword
-    def get(username, password):
-        user = session.query(User).filter(
-            User.username == username, User.password == password).one()
-        return user.id
+    @classmethod
+    def remove(cls, user_id):
+        user = session.query(User).filter(User.id == user_id).one()
+        session.delete(user)
 
-    @staticmethod
+    @classmethod
     @hashpassword
-    def is_user(username, password):
-        try:
-            session.query(User).filter(
-                User.username == username, User.password == password).one()
-        except Exception:
-            return False
-        else:
-            return True
+    def get(cls, username, password):
+        user = session.query(User).filter(User.username == username,
+                                          User.password == password).one()
+        return user
 
-    @staticmethod
+    @classmethod
     @hashpassword
-    def is_logged(username, password):
-        user = session.query(User).filter(
-            User.username == username, User.password == password).one()
+    def is_user(cls, username, password):
+        user = session.query(User).filter(User.username == username,
+                                          User.password == password).one()
+        return False if user is None else True
+
+    @classmethod
+    @hashpassword
+    def is_logged(cls, username, password):
+        user = session.query(User).filter(User.username == username,
+                                          User.password == password).one()
         return True if user.is_active == 1 else False
 
-    @staticmethod
+    @classmethod
     @hashpassword
-    def logged(username, password):
-        user = session.query(User).filter(
-            User.username == username, User.password == password).one()
+    def logged(cls, username, password):
+        user = session.query(User).filter(User.username == username,
+                                          User.password == password).one()
         user.is_active = 1
         session.commit()
 
-    @staticmethod
-    def log_out(user_id):
-        user = session.query(User).filter(
-            User.id == user_id).one()
+    @classmethod
+    def log_out(cls, user_id):
+        user = session.query(User).filter(User.id == user_id).one()
         user.is_active = 0
         session.commit()

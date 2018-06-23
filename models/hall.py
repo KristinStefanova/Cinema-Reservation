@@ -41,7 +41,7 @@ class Hall:
         if self.__map[row - 1][column - 1].is_free():
             self.__map[row - 1][column - 1].take()
         else:
-            raise TakenSeatError
+            raise TakenSeatError()
 
     def free_seat(self, row, column):
         self.__map[row - 1][column - 1].free()

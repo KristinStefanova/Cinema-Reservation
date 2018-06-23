@@ -1,25 +1,34 @@
 from models import Movie
 from utils.database_settings import session
-from tabulate import tabulate
+from utils.settings import LOW_MOVIE_RATING, HIGH_MOVIE_RATING
+from utils.exceptions import MovieRatingOutOfRangeError, MovieIdError
 
 
 class MovieController:
 
-    @staticmethod
-    def create(name, rating):
-        if float(rating) < 0 or float(rating) > 10:
-            raise ValueError("Rating must be in (0, 10)")
-        session.add(Movie(name=name, rating=rating))
-        session.commit()
+    @classmethod
+    def create(cls, name, rating):
+        if rating < LOW_MOVIE_RATING or rating > HIGH_MOVIE_RATING:
+            raise MovieRatingOutOfRangeError()
+        else:
+            movie = Movie(name=name, rating=rating)
+            session.add(movie)
+            session.commit()
 
-    @staticmethod
-    def show_all_movies():
-        return tabulate(
-            session.query(Movie.id, Movie.name, Movie.rating).all(),
-            headers=['id', 'title', 'rating'],
-            tablefmt="plain")
+    @classmethod
+    def remove(cls, movie_id):
+        movie = session.query(Movie).filter(Movie.id == movie_id).one()
+        session.delete(movie)
 
-    @staticmethod
-    def get_movie(id):
+    @classmethod
+    def get_all(cls):
+        movies = session.query(Movie.id, Movie.name, Movie.rating).all()
+        return movies
+
+    @classmethod
+    def get_by_id(cls, id):
         movie = session.query(Movie).filter(Movie.id == id).one()
-        return movie.id
+        if movie is None:
+            raise MovieIdError()
+        else:
+            return movie
