@@ -1,5 +1,6 @@
 from utils.settings import (Base, Column, Integer, String, Float,
-                            CheckConstraint)
+                            CheckConstraint,
+                            HIGH_MOVIE_RATING, LOW_MOVIE_RATING)
 
 
 class Movie(Base):
@@ -7,7 +8,8 @@ class Movie(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
     rating = Column(Float,
-                    CheckConstraint('rating>=1 and rating<=10'),
+                    CheckConstraint(f"rating>={LOW_MOVIE_RATING} and \
+                        rating<={HIGH_MOVIE_RATING}"),
                     default=1,
                     nullable=False
                     )

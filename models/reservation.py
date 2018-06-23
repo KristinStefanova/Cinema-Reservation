@@ -1,5 +1,6 @@
 from utils.settings import (Base, Column, Integer,
-                            CheckConstraint, ForeignKey, relationship)
+                            CheckConstraint, ForeignKey, relationship,
+                            HALL_MIN_SIZE, HALL_MAX_SIZE)
 from .user import User
 from .projection import Projection
 
@@ -12,13 +13,15 @@ class Reservation(Base):
     projection_id = Column(Integer, ForeignKey(Projection.id), nullable=False)
     projection = relationship("Projection", backref="reservations")
     row = Column(Integer,
-                 CheckConstraint('row>=1 and row<=10'),
+                 CheckConstraint(f"row>={HALL_MIN_SIZE} and \
+                    row<={HALL_MAX_SIZE}"),
                  nullable=False
                  )
-    col = Column(Integer,
-                 CheckConstraint('col>=1 and col<=10'),
-                 nullable=False
-                 )
+    column = Column(Integer,
+                    CheckConstraint(f"column>={HALL_MIN_SIZE} and \
+                    column<={HALL_MAX_SIZE}"),
+                    nullable=False
+                    )
 
     def __str__(self):
         return f"{self.projection.date} {self.projection.time} \
