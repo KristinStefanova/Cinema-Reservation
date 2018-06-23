@@ -1,4 +1,6 @@
-from .settings import *
+from utils.settings import (Base, Column, Integer, String,
+                            ForeignKey, relationship)
+from .movie import Movie
 
 
 class Projection(Base):
@@ -9,3 +11,9 @@ class Projection(Base):
     date = Column(String)
     time = Column(String)
     movie = relationship("Movie", backref="projections")
+
+    def __str__(self):
+        return f"[{self.id}] - {self.date} {self.time} ({self.type})"
+
+    def __repr__(self):
+        return f"[{self.id}] - {self.date} {self.time} ({self.type})"

@@ -1,4 +1,4 @@
-from .settings import *
+from utils.settings import Base, Column, Integer, String, Boolean
 
 
 class User(Base):
