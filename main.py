@@ -1,7 +1,16 @@
 from utils.database_settings import Database
-from controllers.main_controller import add_movie
+from .populate import *
+from view.menu import Menu
 
-Database.create()
-add_movie("aaaa", 5)
 
-Database.drop()
+def main():
+    Database.create
+    add_movies()
+    add_projections()
+    add_reservations()
+    add_users()
+    Menu.start()
+
+
+if __name__ == '__main__':
+    main()

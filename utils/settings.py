@@ -18,3 +18,12 @@ HIGH_MOVIE_RATING = 10
 HALL_SEATS = HALL_MAX_SIZE * HALL_MAX_SIZE
 
 SALT = 10000
+
+COMMANDS = """
+show movies - will show all movies
+show movie projections <movie_id> [<date>] - will show all movie projections
+make reservation - make new reservation for movie
+cancel reservation <projection> <row> <column> - will cancel last reservation of <name>
+help - list all commands
+exit - for exit of application
+"""
