@@ -39,7 +39,7 @@ class UserController:
         session.commit()
 
     @staticmethod
-    def log_out(username):
-        user = UserController.get_by_username(username)
+    def log_out(user_id):
+        user = session.query(User).filter(User.id == user_id).one_or_none()
         user.is_active = 0
         session.commit()

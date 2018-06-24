@@ -13,9 +13,9 @@ class Menu:
     @classmethod
     def show_movie_projections(cls, movie_id, date=None):
         if date is None:
-            print(cls.controller.show_movie_projections(movie_id))
+            print(cls.controller.show_all_projections(movie_id))
         else:
-            print(cls.controller.show_movie_projections(movie_id, date))
+            print(cls.controller.show_all_projections_by_date(movie_id, date))
 
     @classmethod
     def log_user(cls):
@@ -52,35 +52,35 @@ class Menu:
 
         print("Current movies: \n")
         print(cls.controller.show_movies())
-        return tickets
+        return int(tickets)
 
     @classmethod
     def get_movie_id(cls):
         movie_id = input("Step 2 (Movie): Choose a movie> ")
 
         print("Projections for movie: \n")
-        print(cls.controller.show_movie_projections_with_avaliable_seats(
+        print(cls.controller.show_all_projections_with_avaliable_seats(
             movie_id))
 
     @classmethod
     def get_projection(cls, tickets):
         projection_id = input("Step 3 (Projection): Choose a projection> ")
-        while (not cls.controller.check_movie_projection(
+        while (not cls.controller.check_movie_projection_tickets(
             projection_id, tickets)
         ):
             projection_id = input(
                 "Step 3 (Projection): Choose a projection> ")
 
         print("Available seats (marked with a dot): \n")
-        cls.controller.show_projection_hall(projection_id)
-        return projection_id
+        print(cls.controller.show_projection_hall(projection_id))
+        return int(projection_id)
 
     @classmethod
     def make_reservations(cls, user_id, projection_id, tickets):
         count = 0
         while count < int(tickets):
-            seat = custom_input(f"Step 4 (Seats): Choose seat {count + 1}> ")
-            row = int(seat.split(', ')[0]),
+            seat = input(f"Step 4 (Seats): Choose seat {count + 1}> ")
+            row = int(seat.split(', ')[0])
             column = int(seat.split(', ')[1])
             try:
                 cls.controller.add_reservation(
@@ -91,8 +91,7 @@ class Menu:
                 print("Seat is alredy taken!")
             else:
                 count += 1
-            print(f"Your reservation is \
-             for {projection_id}, seat: {row} {column}")
+                print(f"Reservation is for projection:{projection_id} seat:{row} {column}")
 
     @classmethod
     def cancel_reservation(cls, user_id, projection_id, row, column):
@@ -107,8 +106,8 @@ class Menu:
         print(COMMANDS)
 
     @classmethod
-    def exit(cls):
-        cls.controller.exit()
+    def exit(cls, user_id):
+        cls.controller.exit(user_id)
         exit()
 
     @classmethod
@@ -152,6 +151,6 @@ class Menu:
                 cls.help()
 
             elif command == 'exit':
-                cls.exit()
+                cls.exit(user_id)
             else:
                 print("Not a valid command")

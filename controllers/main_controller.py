@@ -9,7 +9,7 @@ class Controller:
 
     @staticmethod
     def log_user(username, password):
-        user = UserController.get(username)
+        user = UserController.get_by_username(username)
         UserController.log_in(username)
         return user.id
 
@@ -17,11 +17,11 @@ class Controller:
     def register_user(username, password):
         UserController.create(username, password)
         UserController.log_in(username)
-        user = UserController.get(username)
+        user = UserController.get_by_username(username)
         return user.id
 
     @staticmethod
-    def show_all_movies():
+    def show_movies():
         movies = MovieController.get_all()
         return tabulate(movies,
                         headers=['id', 'title', 'rating'],
@@ -76,8 +76,8 @@ class Controller:
         ReservationController.remove(int(reservation_id))
 
     @staticmethod
-    def exit(username):
-        UserController.log_out(username)
+    def exit(user_id):
+        UserController.log_out(user_id)
 
 
 class AdminPanel():
