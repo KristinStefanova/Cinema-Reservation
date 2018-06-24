@@ -29,7 +29,8 @@ class ProjectionController:
             Projection.time,
             Projection.type).filter(
             Projection.movie_id == movie_id).order_by(
-            Projection.date).all(),
+            Projection.date).all()
+
         return projections
 
     @classmethod
@@ -40,7 +41,8 @@ class ProjectionController:
             Projection.type).filter(
             Projection.movie_id == movie_id,
             Projection.date == date).order_by(
-            Projection.time).all(),
+            Projection.time).all()
+
         return projections
 
     @classmethod
@@ -57,10 +59,11 @@ class ProjectionController:
             (100 - func.coalesce(subquery.c.seats, 0))).outerjoin(
             subquery, Projection.id == subquery.c.projection_id).filter(
                 Projection.movie_id == movie_id).all()
+
         return projections
 
     @classmethod
-    def get(cls, projection_id):
+    def get_by_id(cls, projection_id):
         projection = session.query(
             Movie.name,
             Movie.rating,
@@ -69,4 +72,5 @@ class ProjectionController:
             Projection.type).filter(
             Projection.movie_id == Movie.id,
             Projection.id == projection_id).one()
+
         return projection

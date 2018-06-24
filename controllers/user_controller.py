@@ -19,7 +19,7 @@ class UserController:
 
     @classmethod
     @hashpassword
-    def get(cls, username, password):
+    def get_by_username_password(cls, username, password):
         user = session.query(User).filter(User.username == username,
                                           User.password == password).one()
         return user
@@ -40,7 +40,7 @@ class UserController:
 
     @classmethod
     @hashpassword
-    def logged(cls, username, password):
+    def log_in(cls, username, password):
         user = session.query(User).filter(User.username == username,
                                           User.password == password).one()
         user.is_active = 1

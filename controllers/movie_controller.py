@@ -26,8 +26,8 @@ class MovieController:
         return movies
 
     @classmethod
-    def get_by_id(cls, id):
-        movie = session.query(Movie).filter(Movie.id == id).one()
+    def get_by_id(cls, movie_id):
+        movie = session.query(Movie).filter(Movie.id == movie_id).one()
         if movie is None:
             raise MovieIdError()
         else:
