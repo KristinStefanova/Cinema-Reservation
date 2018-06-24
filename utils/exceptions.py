@@ -43,3 +43,8 @@ class ProjectionIdError(Exception):
 class UserDoesNotExist(Exception):
     def __init__(self):
         Exception.__init__(self, "User does not exists!")
+
+
+class ReservationDoesNotExist(Exception):
+    def __init__(self):
+        Exception.__init__(self, "Reservation does not exists!")

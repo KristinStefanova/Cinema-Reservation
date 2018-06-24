@@ -42,6 +42,6 @@ def add_users():
 
 
 def add_reservations():
-    session.add_all([Reservation(user_id=1, projection_id=2, row=2, column=4),
-                     Reservation(user_id=1, projection_id=2, row=2, column=3)])
+    session.add_all([Reservation(user_id=1, projection_id=2, row=2, column=3),
+                     Reservation(user_id=1, projection_id=2, row=2, column=4)])
     session.commit()
