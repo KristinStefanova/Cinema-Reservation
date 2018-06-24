@@ -1,4 +1,5 @@
-from utils.settings import (Base, Column, Integer, String, Float,
+from utils.database_settings import Base
+from utils.settings import (Column, Integer, String, Float,
                             CheckConstraint,
                             HIGH_MOVIE_RATING, LOW_MOVIE_RATING)
 

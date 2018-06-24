@@ -1,5 +1,5 @@
-from utils.exceptions import TakenSeatError
-from utils.settings import HALL_SIZE
+from utils.exceptions import TakenSeatError, SeatOutOfRangeError
+from utils.settings import HALL_MAX_SIZE
 
 
 class Seat:
@@ -17,42 +17,69 @@ class Seat:
     def is_free(self):
         return self.__current == '.'
 
+    def get(self):
+        return self.__current
+
     def __str__(self):
         return self.__current
 
     def __repr__(self):
-        return self.__str__
+        return str(self)
 
 
 class Hall:
     def __init__(self):
         self.__map = self.create()
 
+    @staticmethod
+    def is_valid_seat(row, column):
+        valid_row = row > 0 and row < HALL_MAX_SIZE + 1
+        valid_column = column > 0 and column < HALL_MAX_SIZE + 1
+
+        if valid_row and valid_column:
+            return True
+        else:
+            return False
+
     def create(self):
-        self.__map = []
-        for i in range(HALL_SIZE):
-            sub_row = []
-            for j in range(HALL_SIZE):
-                sub_row.append(Seat(i, j))
-            self.__map.append(sub_row)
+        self.__map = [[Seat(i, j) for i in range(HALL_MAX_SIZE + 1)]
+                      for j in range(HALL_MAX_SIZE + 1)]
+        for i in range(HALL_MAX_SIZE + 1):
+            for j in range(HALL_MAX_SIZE + 1):
+                if i == 0 and j == 0:
+                    self.__map[i][j] = ' '
+                if i == 0 and j != 0:
+                    self.__map[i][j] = str(j)
+                if i != 0 and j == 0:
+                    self.__map[i][j] = str(i)
         return self.__map
 
     def take_seat(self, row, column):
-        if self.__map[row - 1][column - 1].is_free():
-            self.__map[row - 1][column - 1].take()
+        if self.is_valid_seat(row, column):
+            if self.__map[row][column].is_free():
+                self.__map[row][column].take()
+            else:
+                raise TakenSeatError()
         else:
-            raise TakenSeatError()
+            raise SeatOutOfRangeError()
 
     def free_seat(self, row, column):
-        self.__map[row - 1][column - 1].free()
+        self.__map[row][column].free()
 
-    def show(self):
-        print(' ', end=' ')
-        for i in range(1, 11):
-            print(i, end=' ')
-        print()
-        for i, value in enumerate(self.__map):
-            print(i + 1, end=' ')
-            for sub_item in value:
-                print(sub_item, end=' ')
-            print()
+    def get_seat(self, row, column):
+        return self.__map[row][column].get()
+
+    def __str__(self):
+        hall = ""
+        for i in range(HALL_MAX_SIZE + 1):
+            row = ""
+            for j in range(HALL_MAX_SIZE + 1):
+                if i == HALL_MAX_SIZE and j == 1:
+                    row += str(self.__map[i][j])
+                else:
+                    row += ' ' + str(self.__map[i][j])
+            hall += row + '\n'
+        return hall
+
+    def __repr__(self):
+        return str(self)

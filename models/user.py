@@ -1,4 +1,5 @@
-from utils.settings import Base, Column, Integer, String, Boolean
+from utils.database_settings import Base
+from utils.settings import Column, Integer, String
 
 
 class User(Base):
@@ -6,4 +7,4 @@ class User(Base):
     id = Column(Integer, primary_key=True)
     username = Column(String, nullable=False)
     password = Column(String, nullable=False)
-    is_active = Column(Boolean, default=0)
+    is_active = Column(Integer, nullable=False, default=0)

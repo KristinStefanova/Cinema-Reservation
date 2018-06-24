@@ -3,6 +3,11 @@ class TakenSeatError(Exception):
         Exception.__init__(self, "This seat is taken!")
 
 
+class SeatOutOfRangeError(Exception):
+    def __init__(self):
+        Exception.__init__(self, "This seat is out of range 1 - 10!")
+
+
 class LessThanEightSymbolsError(Exception):
     def __init__(self):
         Exception.__init__(self, "The password is less than 8 symbols!")
@@ -28,3 +33,13 @@ class MovieRatingOutOfRangeError(Exception):
 class MovieIdError(Exception):
     def __init__(self):
         Exception.__init__(self, "Movie ID not expected!")
+
+
+class ProjectionIdError(Exception):
+    def __init__(self):
+        Exception.__init__(self, "Projection ID not expected!")
+
+
+class UserDoesNotExist(Exception):
+    def __init__(self):
+        Exception.__init__(self, "User does not exists!")

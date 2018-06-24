@@ -1,4 +1,5 @@
-from utils.settings import (Base, Column, Integer,
+from utils.database_settings import Base
+from utils.settings import (Column, Integer,
                             CheckConstraint, ForeignKey, relationship,
                             HALL_MIN_SIZE, HALL_MAX_SIZE)
 from .user import User

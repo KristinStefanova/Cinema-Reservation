@@ -1,4 +1,5 @@
-from utils.settings import (Base, Column, Integer, String,
+from utils.database_settings import Base
+from utils.settings import (Column, Integer, String,
                             ForeignKey, relationship)
 from .movie import Movie
 
